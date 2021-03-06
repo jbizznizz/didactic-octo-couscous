@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+/* GRID ITEMS */
+.item1 { grid-area: nps-review; 
+		position: relative;
+        left=10px;}
+.item2 { grid-area: nps-avg-num; 
+		position: relative;
+        vertical-align: middle;}
+.item3 { grid-area: video; }
+.item4 { grid-area: dford-outputs; }
+.item5 { grid-area: proj-breakdown; }
+.item6 { grid-area: nps-trending; 
+		position: relative;}
+
+/* grid container lines*/
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'nps-review nps-review nps-avg-num nps-avg-num video video'
+    'dford-outputs proj-breakdown nps-trending nps-trending nps-trending nps-trending';
+  grid-gap: 1px;
+  background-color: #F2F2F2;
+  padding: 10px;
+}
+
+/* grid container background */
+.grid-container > div {
+  background-color: #FFFFFF;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}
+
+/* stakeholder image and container */
+img {vertical-align: middle;
+   border-radius: 200px;
+   height: 100px;
+   width: 100px;
+   object-fit: cover;}
+   
+.imageContainer {
+   height: 100px;
+   width: 100px;
+   position: relative;
+   margin: auto;
+   left: 100px;
+   top: -50px;
+}
+
+/* container for reviews text box */
+.textBox {
+	position: relative;
+    left: -100px;
+    top: 40px;
+}
+
+/* Next & previous buttons for reviews */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 36%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: blue;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  left: 500px;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Fading animation */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!--DASHBOARD-->
+<h1>2020 BUSINESS VALUE TRACKING</h1>
+
+<p>Click each metric for a breakdown</p>
+
+<div class="grid-container">
+  <!--STAKEHOLDER KUDOS-->
+  <div class="item1">
+  	<h>Stakeholder Kudos</h><br>
+    <!--FIRST REVIEW-->
+    <div class="reviewContainer">
+  		<textarea class="textBox fade" rows="4" cols="30" name="comment" form="usrform">
+	Ya'll did great!</textarea><!--NPS comment-->
+    	<div class="imageContainer">
+  			<img src="https://upload.wikimedia.org/wikipedia/commons/7/74/Beijing_bouddhist_monk_2009_IMG_1486.JPG" style="width:100%"> <!--person's image-->
+            </div>
+        </div>
+    <!--SECOND REVIEW-->
+    <div class="reviewContainer">
+  		<textarea class="textBox fade" rows="4" cols="30" name="comment" form="usrform">
+	Hooray!</textarea> <!--NPS comment-->
+    	<div class="imageContainer">
+  			<img src="https://www.westernunion.com/content/dam/wu/jm/responsive/send-money-in-person-from-jamaica-resp.png" style="width:100%"> <!--person's image-->
+            </div>
+        </div>
+    <!--THIRD REVIEW-->
+    <div class="reviewContainer">
+  		<textarea class="textBox fade" rows="4" cols="30" name="comment" form="usrform">
+	Nice dashboard.</textarea><!--NPS comment-->
+    	<div class="imageContainer">
+  			<img src="https://api.time.com/wp-content/uploads/2017/12/terry-crews-person-of-year-2017-time-magazine-2.jpg" style="width:100%"> <!--person's image-->
+            </div>
+        </div>
+  	</div>
+  <!--AVERAGE NPS-->  
+  <div class="item2">
+  	<p>97<br>NPS Avg</p>
+    </div>
+  <!--VIDEO-->
+  <div class="item3">
+	<div class="embed-container" style="margin-top: 0;">
+      	<iframe src="https://player.vimeo.com/video/440118157" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe>
+        </div>
+    </div>  
+  <!--DFORD OUTPUTS-->
+  <div class="item4">DFORD Outputs
+  	<div id="series_chart_div"></div>
+    </div>
+  <!--PROJECT BREAKDOWN--> 
+  <div class="item5">Project Breakdown
+  	<div id="piechart"></div>
+    </div>
+  <!--NPS TRENDING-->
+  <div class="item6">NPS Trending
+    <div id="curve_chart"></div>
+    </div>
+    </div>
+
+	
+  <!--INCREMENT OR DECREMENT REVIEW COUNTER-->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+</div>
+
+<!--LOAD GOOGLE CHART SCRIPT-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<!-- PIE CHART-->
+<script type="text/javascript">
+// Load google charts
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+// Draw the pie-chart and set the chart values
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Projects', '% of Total'],
+  ['Beacons', 8],
+  ['Program', 2],
+  ['Service', 2],
+  ['CX', 8],
+  ['Partner Centered Design', 2]
+]);
+
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'DFORD Projects'};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+
+<!-- LINE CHART-->
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart2);
+
+      function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Internal', 'External'],
+          ['2004',  87,      77],
+          ['2005',  88,      85],
+          ['2006',  94,       88],
+          ['2007',  97,      94]
+        ]);
+
+        var options = {
+          title: 'NPS Over Time',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          chartArea:{left:40,top:40,width:'100%',height:'50%'}
+        };
+        
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+<!-- BUBBLE CHART-->
+<script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawSeriesChart);
+
+    function drawSeriesChart() {
+
+      var data = google.visualization.arrayToDataTable([
+        ['ID', 'Life Expectancy', 'Fertility Rate', 'Region',     'Population'],
+        ['CAN',    80.66,              1.67,      'North America',  33739900],
+        ['DEU',    79.84,              1.36,      'Europe',         81902307],
+        ['DNK',    78.6,               1.84,      'Europe',         5523095],
+        ['EGY',    72.73,              2.78,      'Middle East',    79716203],
+        ['GBR',    80.05,              2,         'Europe',         61801570],
+        ['IRN',    72.49,              1.7,       'Middle East',    73137148],
+        ['IRQ',    68.09,              4.77,      'Middle East',    31090763],
+        ['ISR',    81.55,              2.96,      'Middle East',    7485600],
+        ['RUS',    68.6,               1.54,      'Europe',         141850000],
+        ['USA',    78.09,              2.05,      'North America',  307007000]
+      ]);
+
+      var options = {
+        title: 'Customer Reach',
+        bubble: {textStyle: {fontSize: 11}},
+        chartArea:{left:40,top:40,width:'40%',height:'45%'}
+        };
+
+      var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+      chart.draw(data, options);
+    }
+    </script>
+   
+<!--REVIEW NAVIGATOR BUTTONS-->
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("reviewContainer");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  slides[slideIndex-1].style.display = "block";  
+}
+</script>
+
+</body>
+</html>
